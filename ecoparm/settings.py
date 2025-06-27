@@ -110,14 +110,15 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'prueba_eco',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',  # Si no tienes contraseña en XAMPP, déjalo vacío
-        'HOST': 'localhost',
-        'PORT': '5432',  # Puerto correcto de Postg
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'), # Este ahora será 'db', el nombre del servicio
+        'PORT': os.getenv('DB_PORT'),
     }
 }
+
 
 
 # Password validation

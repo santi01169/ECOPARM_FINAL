@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  # --- Django Application Service ---
+  web:
+    # Build the image from the Dockerfile in the current directory
+    build: .
+    # Name the custom image using the project name for easy identification
+    image: ecoparm_web
+    # Name the running container
+    container_name: ecoparm_app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      # Mount local code into the container for live development
+      - .:/app
+      # Use named volumes for persistent static and media files
+      - ecoparm_static_volume:/app/staticfiles
+      - ecoparm_media_volume:/app/media
+    ports:
+      - "8000:8000"
+    networks:
+      - ecoparm_network
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db # This should always be the service name of the database
+      - DB_PORT=${DB_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+    # This service will not start until the 'db' service reports as healthy
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # --- PostgreSQL Database Service ---
+  db:
+    image: postgres:13
+    container_name: ecoparm_postgres_db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      # Use a named volume for persistent database data
+      - ecoparm_postgres_data:/var/lib/postgresql/data
+    networks:
+      - ecoparm_network
+    ports:
+      - "5432:5432"
+    # Healthcheck ensures the database is fully initialized and ready
+    # for connections before other services start.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Adminer Service (for database GUI) ---
+  adminer:
+    image: adminer
+    container_name: ecoparm_adminer_gui
+    environment:
+      ADMINER_DEFAULT_SERVER: db # Points to the database service
+      ADMINER_DEFAULT_USER: ${DB_USER}
+      ADMINER_DEFAULT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8013:8000" # Puedes cambiar el puerto según tus preferencias
+    networks:
+      - ecoparm_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+# --- Network Definition ---
+# A dedicated network for the project's services to communicate
+networks:
+  ecoparm_network:
+    driver: bridge
+
+# --- Volume Definitions ---
+# Defines the named volumes for data persistence
+volumes:
+  ecoparm_postgres_data: {}
+  ecoparm_static_volume: {}
+  ecoparm_media_volume: {}
