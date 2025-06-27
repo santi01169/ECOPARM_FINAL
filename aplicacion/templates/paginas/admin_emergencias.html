@@ -1,0 +1,131 @@
+{% extends "paginas/base_interfaz_admin.html" %}
+{% load static %}
+
+{% block titulo %}Admin_Emergencias{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'aplicacion/css/style_admin_evidencias.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<main class="main-content">
+
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+        <span class="breadcrumb-separator">›</span>
+        <i class="fas fa-cogs"></i> PANEL ADMINISTRATIVO
+        </a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">
+            <i class="fas fa-exclamation-triangle"></i> EMERGENCIAS
+        </span>
+    </nav>
+    <p></p>
+
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Emergencias Reportadas</h1>
+
+            <!-- Buscador -->
+            <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                <select id="tipoFiltro" style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 5px;">
+                    <option value="general">Filtro general</option>
+                    <option value="reportada_por">Reportada por</option>
+                    <option value="fecha">Fecha</option>
+                    <option value="tipo">Tipo</option>
+                    <option value="gravedad">Gravedad</option>
+                </select>
+
+                <input type="text" id="inputFiltro" placeholder="Buscar..."
+                    style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 5px; flex-grow: 1; max-width: 300px;">
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>FECHA</th>
+                            <th>REPORTADA POR</th>
+                            <th>ZONA</th>
+                            <th>TIPO</th>
+                            <th>GRAVEDAD</th>
+                            <th>IMAGEN</th>
+                            <th>OBSERVACIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emergencia in emergencias %}
+                        <tr data-id="{{ emergencia.id }}">
+                            <td>{{ forloop.revcounter }}</td>
+                            <td>{{ emergencia.fecha|date:"Y-m-d" }}</td>
+                            <td>{{ emergencia.usuario.nombre }} {{ emergencia.usuario.apellido }}</td>
+                            <td>
+                                {% if emergencia.zona %}
+                                {{ emergencia.zona.nombre }}
+                                {% else %}
+                                <span class="no-zone">Sin zona</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ emergencia.tipo }}</td>
+                            <td>{{ emergencia.gravedad }}</td>
+                            <td>
+                                <a href="{{ emergencia.imagen_url }}" class="evidence-link" target="_blank">
+                                    <i class="fas fa-image"></i> Ver
+                                </a>
+                            </td>
+                            <td title="{{ emergencia.observaciones }}">{{ emergencia.observaciones|truncatechars:50 }}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: #888;">Sin datos</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const inputFiltro = document.getElementById("inputFiltro");
+                const tipoFiltro = document.getElementById("tipoFiltro");
+                const filas = document.querySelectorAll("table tbody tr");
+
+                inputFiltro.addEventListener("input", function () {
+                    const filtro = inputFiltro.value.toLowerCase();
+                    const tipo = tipoFiltro.value;
+
+                    filas.forEach(fila => {
+                        const celdas = fila.querySelectorAll("td");
+                        if (celdas.length === 0) return;
+
+                        let texto = "";
+
+                        switch (tipo) {
+                            case "reportada_por":
+                                texto = celdas[2].innerText.toLowerCase();
+                                break;
+                            case "fecha":
+                                texto = celdas[1].innerText.toLowerCase();
+                                break;
+                            case "tipo":
+                                texto = celdas[4].innerText.toLowerCase();
+                                break;
+                            case "gravedad":
+                                texto = celdas[5].innerText.toLowerCase();
+                                break;
+                            default:
+                                texto = fila.innerText.toLowerCase();
+                        }
+
+                        fila.style.display = texto.includes(filtro) ? "" : "none";
+                    });
+                });
+            });
+        </script>
+    </div>
+</main>
+{% endblock %}

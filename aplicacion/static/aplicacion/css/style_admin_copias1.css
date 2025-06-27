@@ -1,0 +1,947 @@
+/* Estilos base */
+.main-content {
+    padding: 2rem;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 70px);
+}
+
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.dashboard-title {
+    font-size: 1.75rem;
+    color: #2c6544;
+    font-weight: 600;
+    margin: 0;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Estilos de botones */
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background-color: #32794a;
+    color: #ffffff;
+    border-color: #8ed7a9;
+}
+
+.btn-primary:hover {
+    background-color: #7ac79a;
+    border-color: #7ac79a;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #2c6544;
+    border-color: #8ed7a9;
+}
+
+.btn-outline:hover {
+    background-color: rgba(142, 215, 169, 0.1);
+}
+
+
+/* Secciones */
+.section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    color: #2c6544;
+    font-weight: 600;
+    margin: 0;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Estilos de tabla */
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid #e9ecef;
+}
+
+tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+}
+
+tbody tr:hover {
+    background-color: rgba(142, 215, 169, 0.05);
+}
+
+/* Contenedor principal de botones */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Estilo base para botones de acción */
+.action-btn {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.75rem;
+    border: 1px solid transparent;
+}
+
+
+/* Efecto hover para todos los botones */
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Botón de Descargar */
+.download-btn {
+    color: #2c6544;
+    background-color: rgba(142, 215, 169, 0.2);
+}
+
+.download-btn:hover {
+    background-color: rgba(142, 215, 169, 0.3);
+}
+
+/* Botón de Restaurar */
+.restore-btn {
+    color: #1a5276;
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
+.restore-btn:hover {
+    background-color: rgba(52, 152, 219, 0.3);
+}
+
+/* Botón de Eliminar */
+.delete-btn {
+    color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+.delete-btn:hover {
+    background-color: rgba(220, 53, 69, 0.2);
+}
+
+/* Iconos dentro de los botones */
+.action-btn i {
+    font-size: 0.8rem;
+}
+
+/* Badges */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.badge-success {
+    background-color: #e6f7ed;
+    color: #28a745;
+}
+
+.badge-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.badge-danger {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+/* Botones de acción */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #6c757d;
+}
+
+.btn-icon:hover {
+    background-color: #f8f9fa;
+}
+
+.btn-icon.edit:hover {
+    color: #2c6544;
+}
+
+.btn-icon.delete:hover {
+    color: #dc3545;
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.form-control {
+    width: 95%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #8ed7a9;
+    box-shadow: 0 0 0 3px rgba(142, 215, 169, 0.25);
+    background-color: white;
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Checkbox personalizado */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #8ed7a9;
+    cursor: pointer;
+}
+
+/* Barra de progreso */
+.progress {
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #8ed7a9;
+    border-radius: 4px;
+}
+
+/* Estilos para modales */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal {
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-backdrop.active .modal {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #32794a, #2c6544);
+    color: white;
+    position: relative;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+.modal-body {
+    padding: 24px;
+    background: #fff;
+}
+
+.modal-message {
+    margin: 0 0 20px 0;
+    color: #4a5568;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: white;
+}
+
+.modal-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.modal-form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.modal-form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+}
+
+.modal-form-control:focus {
+    outline: none;
+    border-color: #8ed7a9;
+    box-shadow: 0 0 0 3px rgba(142, 215, 169, 0.25);
+}
+
+/* Checkbox personalizado */
+.modal-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+}
+
+.modal-checkbox-label input {
+    width: 18px;
+    height: 18px;
+    accent-color: #8ed7a9;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-body p {
+    margin-bottom: 1rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 16px 24px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Botones del modal */
+.modal-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 100px;
+    text-align: center;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.modal-btn-primary {
+    background: linear-gradient(135deg, #32794a, #2c6544);
+    color: white;
+}
+
+.modal-btn-primary:hover {
+    background: linear-gradient(135deg, #2c6544, #24573b);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(50, 121, 74, 0.3);
+}
+
+.modal-btn-outline {
+    background: transparent;
+    color: #2c6544;
+    border: 1px solid #8ed7a9;
+}
+
+.modal-btn-outline:hover {
+    background: rgba(142, 215, 169, 0.1);
+}
+
+.modal-btn-danger {
+    background: linear-gradient(135deg, #f56565, #e53e3e);
+    color: white;
+}
+
+.modal-btn-danger:hover {
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(245, 101, 101, 0.3);
+}
+
+/* Alertas dentro de modales */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 4px solid #ffeeba;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #f5c6cb;
+}
+
+/* Opciones de checkbox */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    margin: 0;
+}
+
+/* Estilo para botón de peligro */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .modal {
+        width: 95%;
+    }
+    
+    .action-buttons {
+        flex-wrap: wrap;
+    }
+    
+    .section-header {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-backdrop.active {
+  display: flex !important;
+}
+
+.modal {
+  background: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ==================== ESTILOS PARA ALERTAS ECOPARM ==================== */
+
+/* Base para todas las alertas */
+.ecoparm-alert {
+    width: 400px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+    border: none;
+}
+
+#custom-alert:not(.hidden) .ecoparm-alert {
+    transform: translateY(0) scale(1);
+}
+
+/* Encabezado con gradiente */
+.ecoparm-alert-header {
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #32794a, #2c6544);
+    color: white;
+    border-bottom: none;
+}
+
+.ecoparm-alert-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+/* Cuerpo de la alerta */
+.ecoparm-alert-body {
+    padding: 24px;
+    background: #fff;
+}
+
+.ecoparm-alert-message {
+    margin: 0;
+    color: #4a5568;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Pie de la alerta */
+.ecoparm-alert-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 16px 24px;
+}
+
+.confirmation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    text-align: center;
+}
+
+.confirmation-icon {
+    color: #ecc94b;
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.confirmation-message {
+    color: #4a5568;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.ecoparm-alert-button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #32794a, #2c6544);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(50, 121, 74, 0.2);
+    min-width: 100px;
+    text-align: center;
+}
+
+.ecoparm-alert-button:hover {
+    background: linear-gradient(135deg, #2c6544, #24573b);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(50, 121, 74, 0.3);
+}
+
+.ecoparm-alert-button:active {
+    transform: translateY(0);
+}
+
+.ecoparm-alert-button.cancel {
+    background: linear-gradient(135deg, #f56565, #e53e3e);
+    box-shadow: 0 2px 5px rgba(245, 101, 101, 0.2);
+}
+
+.ecoparm-alert-button.cancel:hover {
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+    box-shadow: 0 4px 8px rgba(245, 101, 101, 0.3);
+}
+
+/* Barra de progreso mejorada */
+.ecoparm-progress-container {
+    margin-top: 20px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 3px;
+}
+
+.ecoparm-progress-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.ecoparm-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #38a169, #48bb78);
+    border-radius: 4px;
+    transition: width 0.5s ease, background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.ecoparm-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    animation: progressShine 2s infinite linear;
+}
+
+@keyframes progressShine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.ecoparm-progress-text {
+    display: block;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #718096;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* Mensajes de error en línea mejorados */
+#inline-error {
+    display: none;
+    margin-top: 8px;
+    background: #fff5f5;
+    border-radius: 6px;
+    padding: 12px 15px;
+    border-left: 4px solid #e53e3e;
+    animation: fadeIn 0.3s ease;
+}
+
+.ecoparm-error-message {
+    display: flex;
+    align-items: center;
+    color: #e53e3e;
+    font-size: 0.9rem;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.error-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.ecoparm-error-hint {
+    font-size: 0.8rem;
+    color: #718096;
+    margin-top: 5px;
+    padding-left: 28px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efecto de overlay más moderno */
+#custom-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+#custom-alert:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#custom-alert.hidden .ecoparm-alert {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+}
+
+/* Notificaciones toast mejoradas */
+.toast {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    transform: translateX(150%);
+    padding: 16px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 350px;
+    width: auto;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast.success {
+    background: linear-gradient(135deg, rgba(72, 187, 120, 0.9), rgba(56, 161, 105, 0.9));
+}
+
+.toast.error {
+    background: linear-gradient(135deg, rgba(245, 101, 101, 0.9), rgba(229, 62, 62, 0.9));
+}
+
+.toast.warning {
+    background: linear-gradient(135deg, rgba(246, 173, 85, 0.9), rgba(237, 137, 54, 0.9));
+    color: #1a202c;
+}
+
+.toast i {
+    font-size: 1.4rem;
+    min-width: 24px;
+}
+
+.toast-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.toast-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.toast-message {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* Animación de entrada */
+@keyframes toastIn {
+    from {
+        transform: translateX(150%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animación de salida */
+@keyframes toastOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(150%);
+        opacity: 0;
+    }
+}
+
+.toast.show {
+    animation: toastIn 0.5s forwards;
+}
+
+.toast.hiding {
+    animation: toastOut 0.5s forwards;
+}
+
+/* Efecto de borde animado para inputs con error */
+.input-error {
+    border-color: #fc8181 !important;
+    animation: inputErrorShake 0.4s ease;
+    box-shadow: 0 0 0 3px rgba(245, 101, 101, 0.2);
+}
+
+@keyframes inputErrorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20%, 60% {
+        transform: translateX(-5px);
+    }
+    40%, 80% {
+        transform: translateX(5px);
+    }
+}
+

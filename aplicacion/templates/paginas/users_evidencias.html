@@ -1,0 +1,188 @@
+{% extends "paginas/base_interfaz_user.html" %}
+{% load static %}
+
+{% block titulo %}Users_Evidencias{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'aplicacion/css/style_users_evidencias.css' %}">
+{% endblock %}
+
+{% block contenido %}
+{% block scripts %}
+<script src="{% static 'aplicacion/js/script_users_evidencias1.js' %}"></script>
+{% endblock %}
+<main class="main-content">
+
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+        <span class="breadcrumb-separator">›</span>
+        <i class="fas fa-cogs"></i> PANEL GUARDAPARAMOS
+        </a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">
+            <i class="fas fa-file-alt"></i> EVIDENCIAS
+        </span>
+    </nav>
+    <p></p>
+
+    <div class="tab-pane" id="evidence">
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Gestión de Evidencias</h1>
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary" id="add-evidence-btn">
+                        <i class="fas fa-plus"></i> Nueva Evidencia
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabla de evidencias actualizada -->
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha</th>
+                            <th>Subida por</th>
+                            <th>Actividad</th>
+                            <th>Ubicación</th>
+                            <th>Observaciones</th>
+                            <th>URL Evidencia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for evidencia in evidencias %}
+                        <tr data-id="{{ evidencia.id }}">
+                            <td>{{ forloop.revcounter }}</td>
+                            <td>{{ evidencia.fecha_subida|date:"Y-m-d H:i" }}</td>
+                            <td>{{ evidencia.usuario_nombre }}</td>
+                            <td>{{ evidencia.actividad }}</td>
+                            <td>{{ evidencia.ubicacion }}</td>
+                            <td>{{ evidencia.observaciones }}</td>
+                            <td>
+                                <a href="{{ evidencia.archivo_url }}" class="evidence-link" target="_blank">
+                                    <i class="fas fa-image"></i> Ver
+                                </a>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <!-- Botón Editar (mantén onclick/title/etc originales) -->
+                                    <button class="action-btn btn-edit" title="Editar">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+
+                                    <!-- Botón Eliminar (mantén onclick/title/etc originales) -->
+                                    <button class="action-btn btn-delete" title="Eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: #888;">Sin datos</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal: Agregar Nueva Evidencia -->
+            <div class="modal-backdrop" id="add-evidence-modal">
+                <div class="modal">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h3 class="modal-title">Agregar Nueva Evidencia</h3>
+                            <!-- Puedes cambiar esto a "Nuevo Reporte" si lo prefieres -->
+                            <button class="modal-close" type="button">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-label">Actividad</label>
+                                <input type="text" name="actividad" class="form-control"
+                                    placeholder="Actividad relacionada con la evidencia" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Evidencia</label>
+                                <div class="file-upload" id="drop-area">
+                                    <label class="file-upload-label">
+                                        <div style="text-align: center;">
+                                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                            <div class="upload-text">Arrastre y suelte la imagen aquí</div>
+                                            <div class="upload-hint">o haga clic para seleccionar</div>
+                                        </div>
+                                        <input type="file" name="archivo" id="file-input" class="file-upload-input"
+                                            accept="image/*" required>
+                                    </label>
+                                    <div id="preview-container"
+                                        style="display: none; margin-top: 15px; text-align: center;">
+                                        <img id="preview-image" src="#" alt="Preview"
+                                            style="max-width: 100%; max-height: 200px; border-radius: 6px;">
+                                        <button type="button" id="remove-image" class="btn btn-sm btn-danger"
+                                            style="margin-top: 10px;">
+                                            <i class="fas fa-trash"></i> Eliminar imagen
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ubicación -->
+                            <div class="form-group">
+                                <label class="form-label">Ubicación:</label>
+                                <input class="form-control" type="text" id="ubicacion" name="ubicacion" readonly
+                                    placeholder="Haz clic para obtener tu ubicación">
+                            </div>
+
+                            <!-- Botón para Obtener Ubicación -->
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="button" value="Obtener Ubicación"
+                                    onclick="obtenerUbicacion()">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Observaciones</label>
+                                <textarea name="observaciones" class="form-control" rows="3"
+                                    placeholder="Observaciones adicionales"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline modal-close-btn" type="button">Cancelar</button>
+                            <button class="btn btn-primary" type="submit">Subir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Alertas ECOPARM -->
+    <div id="custom-alert" class="hidden">
+        <div class="ecoparm-alert">
+            <div class="ecoparm-alert-header">
+                <h3 class="ecoparm-alert-title" id="alert-title"></h3>
+            </div>
+            <div class="ecoparm-alert-body">
+                <p class="ecoparm-alert-message" id="alert-message"></p>
+                <div class="ecoparm-progress-container" id="progress-container" style="display: none;">
+                    <div class="ecoparm-progress-bar">
+                        <div class="ecoparm-progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="ecoparm-progress-text" id="progress-text"></span>
+                </div>
+            </div>
+            <div class="ecoparm-alert-footer">
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de error en línea -->
+    <div id="inline-error" class="hidden">
+        <div class="ecoparm-error-message">
+            <span id="error-message-text"></span>
+        </div>
+        <div class="ecoparm-error-hint" id="error-hint-text"></div>
+    </div>
+</main>
+{% endblock %}

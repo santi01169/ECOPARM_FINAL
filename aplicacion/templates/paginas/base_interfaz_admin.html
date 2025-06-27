@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'aplicacion/images/logo_oficina_gestion_riesgo.png' %}">
+    <title>{% block titulo %}Inicio_Admin{% endblock %}</title>
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'aplicacion/css/style_base_admin2.css' %}">
+    <link rel="stylesheet" href="{% static 'aplicacion/css/style_ayuda.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    {% block estilos %}{% endblock %}
+</head>
+
+<body>
+    <!-- Scripts -->
+    <script src="{% static 'aplicacion/js/script_inicio_admin.js' %}" defer></script>
+    <script src="{% static 'aplicacion/js/script_accesibilidad.js' %}" defer></script>
+    <script src="{% static 'aplicacion/js/script_ayuda.js' %}" defer></script>
+
+
+
+    <!-- Header móvil -->
+    <header class="mobile-header">
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo">
+            <img src="{% static 'aplicacion/images/ecoparm.png' %}" alt="ECOPARM" class="ecoparm">
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Barra lateral -->
+        <nav class="sidebar" id="sidebar">
+            <ul class="menu">
+                <li class=" perfil-item {% if active_section == 'perfil' %}active{% endif %}">
+                    <a href="{% url 'admin_perfil' %}">
+                        <div class="menu-item-content profile-content">
+                            <div class="barra-profile-photo">
+                                <img src="{% if request.user.foto_perfil %}{{ request.user.foto_perfil.url }}{% else %}{% static 'aplicacion/images/usuario.png' %}{% endif %}"
+                                    alt="Foto de perfil" class="barra-profile-img">
+                    </a>
+    </div>
+    <span class="barra-username">{{ request.user.nombre }} {{ request.user.apellido }}</span>
+    </div>
+
+    </li>
+    <li class="menu-item {% if active_section == 'dashboard' %}active{% endif %}">
+        <a href="{% url 'admin_dashboard' %}">
+            <div class="menu-item-content">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>DASHBOARD</span>
+            </div>
+        </a>
+    </li>
+    <li class="menu-item {% if active_section == 'usuarios' %}active{% endif %}">
+        <a href="{% url 'admin_users' %}">
+            <div class="menu-item-content">
+                <i class="fas fa-users"></i>
+                <span>USUARIOS</span>
+            </div>
+        </a>
+    </li>
+    <li class="menu-item {% if active_section == 'evidencias' %}active{% endif %}">
+        <a href="{% url 'admin_evidencias' %}">
+            <div class="menu-item-content">
+                <i class="fas fa-file-alt"></i>
+                <span>EVIDENCIAS</span>
+            </div>
+        </a>
+    </li>
+    <li class="menu-item {% if active_section == 'florafauna' %}active{% endif %}">
+        <a href="{% url 'admin_flora_fauna' %}">
+            <div class="menu-item-content">
+                <i class="fas fa-leaf"></i>
+                <span>FLORA/FAUNA</span>
+            </div>
+        </a>
+    </li>
+    <li class="menu-item {% if active_section == 'emergencias' %}active{% endif %}">
+        <a href="{% url 'admin_emergencias' %}">
+            <div class="menu-item-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>EMERGENCIAS</span>
+            </div>
+        </a>
+    </li>
+    <li class="menu-item {% if active_section == 'copias' %}active{% endif %}">
+        <a href="{% url 'admin_copias_seguridad' %}">
+            <div class="menu-item-content">
+                <i class="fas fa-database"></i>
+                <span>COPIAS DE SEGURIDAD</span>
+            </div>
+        </a>
+    </li>
+    <li class="menu-item">
+        <a href="{% url 'index' %}">
+            <div class="menu-item-content">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>CERRAR SESIÓN</span>
+            </div>
+        </a>
+    </li>
+    </ul>
+    <div class="sidebar-footer">
+        <div class="logo">
+            <img src="{% static 'aplicacion/images/logo_oficina_gestion_riesgo.png' %}"
+                alt="Oficina de Gestión del Riesgo" class="ecoparm oficina-logo">
+        </div>
+    </div>
+    </nav>
+
+    <!-- Botón Flotante de Ayuda -->
+    <button id="boton-ayuda" class="boton-ayuda" aria-label="Botón de ayuda">
+        <i class="fas fa-question-circle"></i>
+    </button>
+
+    <!-- Ventana Emergente -->
+    <div id="ventana-ayuda" class="ventana-ayuda">
+        <div class="header-ayuda">
+            <h3><i class="fas fa-headset"></i> Centro de Ayuda</h3>
+            <button id="cerrar-ayuda" aria-label="Cerrar ventana">&times;</button>
+        </div>
+
+        <!-- Pestañas -->
+        <div class="pestanas">
+            <button class="pestana activa" data-tab="manual"><i class="fas fa-book"></i> Manual de Usuario</button>
+            <button class="pestana" data-tab="emergencias"><i class="fas fa-bell"></i> Emergencias</button>
+            <button class="pestana" data-tab="faq"><i class="fas fa-question-circle"></i> Preguntas
+                Frecuentes</button>
+        </div>
+
+        <!-- Contenido: Manual de Usuario -->
+        <div id="manual" class="contenido-pestana activa">
+            <ul class="lista-ayuda">
+                <li>Consulta el manual para aprender a usar la plataforma.</li>
+                <li>
+                    <a href="{% url 'descargar_manual_usuario' %}">
+                        <i class="fas fa-file-download"></i> Descargar Manual de Usuario (PDF)
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Contenido: Emergencias -->
+        <div id="emergencias" class="contenido-pestana">
+            <ul class="lista-ayuda">
+                <li><a href="tel:3132959347"><i class="fas fa-phone-alt"></i> Bomberos:
+                        <strong>3132959347</strong></a></li>
+                <li><a href="tel:3233207507"><i class="fas fa-phone-alt"></i> Policía Ambiental:
+                        <strong>3233207507</strong></a></li>
+                <li><a href="tel:+3132620844"><i class="fas fa-phone-alt"></i> Defensa Civil Sogamoso:
+                        <strong>+3132620844</strong></a></li>
+                <li><a href="tel:+(608)7702040"><i class="fas fa-phone-alt"></i> Oficina de Gestión del Riesgo:
+                        <strong>+(608)7702040</strong></a></li>
+            </ul>
+        </div>
+
+        <!-- Contenido: Preguntas Frecuentes -->
+        <div id="faq" class="contenido-pestana">
+            <ul class="lista-ayuda">
+                <li class="pregunta-faq">
+                    <strong>¿Cómo llegar al Páramo de Siscunsí desde Sogamoso?</strong>
+                    <div class="respuesta-faq oculto">Desde Sogamoso, toma la vía hacia Yopal. Al llegar a El
+                        Crucero, sigue recto (no tomes el desvío hacia Aquitania). En la vereda Cañas, gira a la
+                        izquierda por una carretera destapada que lleva al páramo. Se recomienda ir en 4x4 y con
+                        guía local.</div>
+                </li>
+                <li class="pregunta-faq">
+                    <strong>¿Qué actividades se pueden realizar en el páramo?</strong>
+                    <div class="respuesta-faq oculto">Senderismo, observación de flora y fauna, fotografía, visitas
+                        educativas y recorridos con enfoque ambiental.</div>
+                </li>
+                <li class="pregunta-faq">
+                    <strong>¿Se necesita permiso para ingresar?</strong>
+                    <div class="respuesta-faq oculto">Sí, es recomendable pedir autorización en la Alcaldía o con
+                        organizaciones locales de la vereda Cañas.</div>
+                </li>
+                <li class="pregunta-faq">
+                    <strong>¿Qué debo llevar para visitar el páramo?</strong>
+                    <div class="respuesta-faq oculto">Ropa abrigada, botas, agua, comida, protector solar y una
+                        bolsa para residuos. No dejes basura ni dañes los frailejones.</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {% block contenido %}{% endblock %}
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 ECOPARM. Todos los derechos reservados.</p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+
+</html>

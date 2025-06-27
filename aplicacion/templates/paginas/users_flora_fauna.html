@@ -1,0 +1,179 @@
+{% extends "paginas/base_interfaz_user.html" %}
+{% load static %}
+
+{% block titulo %}Users_Flora_Fauna{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'aplicacion/css/style_users_flora_fauna.css' %}">
+{% endblock %}
+
+{% block contenido %}
+{% block scripts %}
+<script src="{% static 'aplicacion/js/script_users_flora_fauna.js' %}"></script>
+{% endblock %}
+<main class="main-content">
+
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+        <span class="breadcrumb-separator">›</span>
+        <i class="fas fa-cogs"></i> PANEL GUARDAPARAMOS
+        </a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">
+            <i class="fas fa-leaf"></i> FLORA / FAUNA
+        </span>
+    </nav>
+    <p></p>
+
+    <div class="tab-pane" id="evidence">
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Gestión de Flora y Fauna</h1>
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary" id="add-evidence-btn">
+                        <i class="fas fa-plus"></i> Nuevo Registro
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabla de registros -->
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha</th>
+                            <th>Subida por</th>
+                            <th>Zona</th>
+                            <th>Tipo</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Imagen</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in registros %}
+                        <tr data-id="{{ registro.id }}">
+                            <td>{{ registro.numero }}</td>
+                            <td>{{ registro.fecha|date:"Y-m-d H:i" }}</td>
+                            <td>{{ registro.usuario.nombre }} {{ registro.usuario.apellido }}</td>
+                            <td>{{ registro.zona.nombre }}</td>
+                            <td>{{ registro.tipo }}</td>
+                            <td>{{ registro.nombre_especie }}</td>
+                            <td>{{ registro.descripcion }}</td>
+                            <td>
+                                <a href="{{ registro.imagen_url }}" class="evidence-link" target="_blank">
+                                    <i class="fas fa-image"></i> Ver
+                                </a>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn btn-edit" data-id="{{ registro.id }}"
+                                        data-tipo="{{ registro.tipo }}" data-nombre="{{ registro.nombre_especie }}"
+                                        data-descripcion="{{ registro.descripcion }}"
+                                        data-imagen-url="{{ registro.imagen_url }}"><i
+                                            class="fas fa-pencil-alt"></i></button>
+                                    <button class="action-btn btn-delete" data-id="{{ registro.id }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: #888;">Sin datos</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal-backdrop" id="flora-fauna-modal">
+                <div class="modal">
+                    <form method="POST" enctype="multipart/form-data" id="flora-fauna-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="registro_id" id="registro-id-input">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="modal-title">Agregar Flora o Fauna</h3>
+                            <button class="modal-close" type="button">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-label">Tipo</label>
+                                <select name="tipo" class="form-control" id="tipo-input" required>
+                                    <option value="">Seleccione</option>
+                                    <option value="Flora">Flora</option>
+                                    <option value="Fauna">Fauna</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Nombre de la Especie</label>
+                                <input type="text" name="nombre_especie" class="form-control" id="nombre-input"
+                                    placeholder="Nombre común o científico" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Imagen</label>
+                                <div class="file-upload">
+                                    <label class="file-upload-label">
+                                        <div id="upload-text-container" style="text-align: center;">
+                                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                            <div class="upload-text">Arrastre y suelte la imagen aquí</div>
+                                            <div class="upload-hint">o haga clic para seleccionar</div>
+                                        </div>
+                                        <input type="file" name="imagen" class="file-upload-input" id="imagen-input"
+                                            accept="image/*">
+                                    </label>
+                                    <div id="imagen-preview" style="margin-top:10px;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Descripción</label>
+                                <textarea name="descripcion" class="form-control" id="descripcion-input" rows="3"
+                                    placeholder="Descripción de la especie" required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline modal-close-btn" type="button">Cancelar</button>
+                            <button class="btn btn-primary" type="submit" id="submit-btn">Subir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alertas ECOPARM (igual que en users_evidencias) -->
+    <div id="custom-alert" class="hidden">
+        <div class="ecoparm-alert">
+            <div class="ecoparm-alert-header">
+                <h3 class="ecoparm-alert-title" id="alert-title">Título</h3>
+            </div>
+            <div class="ecoparm-alert-body">
+                <p class="ecoparm-alert-message" id="alert-message">Mensaje aquí</p>
+                <div class="ecoparm-progress-container" id="progress-container" style="display: none;">
+                    <div class="ecoparm-progress-bar">
+                        <div class="ecoparm-progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="ecoparm-progress-text" id="progress-text">0%</span>
+                </div>
+            </div>
+            <div class="ecoparm-alert-footer">
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de error en línea (corregido) -->
+    <div id="inline-error" class="hidden">
+        <div class="ecoparm-error-message">
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            <span id="error-message-text"></span>
+        </div>
+        <div class="ecoparm-error-hint" id="error-hint-text"></div>
+    </div>
+</main>
+{% endblock %}

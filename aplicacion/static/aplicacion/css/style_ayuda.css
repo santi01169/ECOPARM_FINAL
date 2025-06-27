@@ -1,0 +1,239 @@
+/* --- Botón Principal (mejoras responsive) --- */
+.boton-ayuda {
+  font-size: 25px;
+  position: fixed;
+  right: 20px;
+  padding: 7px;
+  background-color: #32794a;
+  height: 52px;
+  width: 52px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.30s ease;
+  border: none;
+  bottom: 80px;
+  z-index: 1000;
+  color: white;
+}
+
+.boton-ayuda:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* --- Ventana Emergente (responsive) --- */
+.ventana-ayuda {
+  display: none;
+  position: fixed;
+  bottom: 140px;
+  right: 20px;
+  background: white;
+  width: 350px;
+  max-width: calc(100vw - 40px);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.header-ayuda {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #0f8d2e;
+}
+
+.header-ayuda h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#cerrar-ayuda {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #940713;
+  flex-shrink: 0;
+}
+
+/* --- Pestañas (responsive) --- */
+.pestanas {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #cceccc;
+  padding: 0;
+  background-color: #eaffea;
+}
+
+.pestana {
+  flex: 1 0 auto;
+  min-width: 100px;
+  background: none;
+  border: none;
+  padding: 12px 5px;
+  cursor: pointer;
+  color: #0a530a;
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pestana.activa {
+  color: #074d0c;
+  border-bottom: 2px solid #125312;
+}
+
+/* --- Contenido (responsive) --- */
+.contenido-pestana {
+  display: none;
+  padding: 15px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.contenido-pestana.activa {
+  display: block;
+}
+
+/* Lista de ayuda */
+.lista-ayuda {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-ayuda li {
+  margin-bottom: 12px;
+  word-break: break-word;
+}
+
+.lista-ayuda a {
+  color: #2f8f2f;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  transition: color 0.2s;
+}
+
+.lista-ayuda a:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+
+.lista-ayuda a i {
+  font-size: 18px;
+  width: 25px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* FAQ */
+.pregunta-faq {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.pregunta-faq strong {
+  display: block;
+  padding: 8px 0;
+}
+
+.respuesta-faq {
+  display: none;
+  padding: 10px;
+  margin-top: 5px;
+  background-color: #e6f4e6;
+  border-left: 3px solid #4CAF50;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.pregunta-faq.activa .respuesta-faq {
+  display: block;
+}
+
+/* --- Media Queries --- */
+@media screen and (max-width: 768px) {
+  .ventana-ayuda {
+    width: 300px;
+    bottom: 150px;
+  }
+  
+  .pestana {
+    font-size: 12px;
+    padding: 10px 5px;
+    min-width: 80px;
+  }
+  
+  .contenido-pestana {
+    padding: 12px;
+    max-height: 60vh;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .ventana-ayuda {
+    width: 280px;
+    right: 10px;
+    bottom: 160px;
+  }
+  
+  .header-ayuda h3 {
+    font-size: 1rem;
+  }
+  
+  .pestana {
+    font-size: 11px;
+    padding: 8px 3px;
+    min-width: 70px;
+  }
+  
+  .lista-ayuda a {
+    font-size: 14px;
+  }
+  
+  .lista-ayuda a i {
+    font-size: 16px;
+    width: 20px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .ventana-ayuda {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  
+  .contenido-pestana {
+    max-height: 50vh;
+  }
+}

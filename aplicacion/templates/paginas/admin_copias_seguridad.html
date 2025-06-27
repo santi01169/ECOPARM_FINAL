@@ -1,0 +1,120 @@
+{% extends "paginas/base_interfaz_admin.html" %}
+{% load static %}
+
+{% block titulo %}Admin_Copias{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'aplicacion/css/style_admin_copias1.css' %}">
+{% endblock %}
+
+{% block contenido %}
+{% block scripts %}
+<script src="{% static 'aplicacion/js/script_admin_copias.js' %}" defer></script>
+{% endblock %}
+<main class="main-content">
+
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+        <span class="breadcrumb-separator">›</span>
+            <i class="fas fa-cogs"></i> PANEL ADMINISTRATIVO
+        </a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">
+            <i class="fas fa-database"></i> COPIAS DE SEGURIDAD
+        </span>
+    </nav>
+    <p></p>
+
+    <div class="tab-pane" id="backup">
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Copias de Seguridad</h1>
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary" id="create-backup-btn">
+                        <i class="fas fa-plus"></i> Nueva Copia
+                    </button>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Copias de Seguridad Recientes</h2>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Tamaño</th>
+                                <th>Creado por</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for backup in backups %}
+                            <tr data-backup-id="{{ backup.id }}">
+                                <td>{{ backup.nombre }}</td>
+                                <td>{{ backup.fecha }}</td>
+                                <td>{{ backup.tamano }}</td>
+                                <td>{{ backup.creado_por }}</td>
+                                <td><span class="badge badge-success">{{ backup.estado }}</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-btn download-btn" title="Descargar"
+                                            data-backup-id="{{ backup.id }}">
+                                            <i class="fas fa-download"></i> 
+                                        </button>
+                                        <button class="action-btn restore-btn" title="Restaurar"
+                                            data-backup-id="{{ backup.id }}">
+                                            <i class="fas fa-undo"></i> 
+                                        </button>
+                                        <button class="action-btn delete-btn" title="Eliminar"
+                                            data-backup-id="{{ backup.id }}">
+                                            <i class="fas fa-trash"></i> 
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-alert" class="hidden">
+        <div class="ecoparm-alert">
+            <div class="ecoparm-alert-header">
+                <h3 class="ecoparm-alert-title" id="alert-title">Título</h3>
+            </div>
+            <div class="ecoparm-alert-body">
+                <p class="ecoparm-alert-message" id="alert-message">Mensaje aquí</p>
+                <div class="ecoparm-progress-container" id="progress-container" style="display: none;">
+                    <div class="ecoparm-progress-bar">
+                        <div class="ecoparm-progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="ecoparm-progress-text" id="progress-text">0%</span>
+                </div>
+            </div>
+            <div class="ecoparm-alert-footer">
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de error en línea -->
+    <div id="inline-error" class="hidden">
+        <div class="ecoparm-error-message">
+            <i class="fas fa-exclamation-circle error-icon"></i>
+            <span id="error-message-text"></span>
+        </div>
+        <div class="ecoparm-error-hint" id="error-hint-text"></div>
+    </div>
+
+    <!-- Modales para acciones -->
+    {% include 'paginas/modales_backup.html' %}
+
+</main>
+{% endblock %}

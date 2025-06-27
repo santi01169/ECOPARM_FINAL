@@ -1,0 +1,177 @@
+{% extends "paginas/base_interfaz_admin.html" %}
+{% load static %}
+
+{% block titulo %}Admin_Flora_Fauna{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'aplicacion/css/style_admin_flora_fauna.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<main class="main-content">
+
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+        <span class="breadcrumb-separator">›</span>
+        <i class="fas fa-cogs"></i> PANEL ADMINISTRATIVO
+        </a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">
+            <i class="fas fa-leaf"></i> FLORA / FAUNA
+        </span>
+    </nav>
+    <p></p>
+
+
+    <div class="tab-pane" id="evidence">
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Flora y Fauna Reportada</h1>
+                <!-- Buscador -->
+                <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                    <select id="tipoFiltro" style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 5px;">
+                        <option value="general">Filtro general</option>
+                        <option value="subida_por">Subida por</option>
+                        <option value="fecha">Fecha</option>
+                        <option value="tipo">Tipo</option>
+                    </select>
+
+                    <input type="text" id="inputFiltro" placeholder="Buscar..."
+                        style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 5px; flex-grow: 1; max-width: 300px;">
+                </div>
+            </div>
+
+
+            <div class="section">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>FECHA</th>
+                                <th>SUBIDA POR</th>
+                                <th>ZONA</th>
+                                <th>TIPO</th>
+                                <th>NOMBRE</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>IMAGEN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registro in registros %}
+                            <tr data-id="{{ registro.id }}">
+                                <td>{{ forloop.revcounter }}</td>
+                                <td>{{ registro.fecha|date:"Y-m-d H:i" }}</td>
+                                <td>{{ registro.usuario.nombre }} {{ registro.usuario.apellido }}</td>
+                                <td>
+                                    {% if registro.zona %}
+                                    {{ registro.zona.nombre }}
+                                    {% else %}
+                                    <span class="no-zone">Sin zona</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span
+                                        class="species-type {% if registro.tipo == 'flora' %}flora{% else %}fauna{% endif %}">
+                                        {{ registro.tipo }}
+                                    </span>
+                                </td>
+                                <td>{{ registro.nombre_especie }}</td>
+                                <td title="{{ registro.descripcion }}">{{ registro.descripcion|truncatechars:50 }}</td>
+                                <td>
+                                    <a href="{{ registro.imagen_url }}" class="evidence-link" target="_blank">
+                                        <i class="fas fa-image"></i> Ver
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: #888;">No se encontraron registros
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const inputFiltro = document.getElementById("inputFiltro");
+        const tipoFiltro = document.getElementById("tipoFiltro");
+        const filas = document.querySelectorAll("table tbody tr");
+
+        inputFiltro.addEventListener("input", function () {
+            const filtro = inputFiltro.value.toLowerCase();
+            const tipo = tipoFiltro.value;
+
+            filas.forEach(fila => {
+                const celdas = fila.querySelectorAll("td");
+                if (celdas.length === 0) return;
+
+                let texto = "";
+
+                switch (tipo) {
+                    case "subida_por":
+                        texto = celdas[2].innerText.toLowerCase();
+                        break;
+                    case "fecha":
+                        texto = celdas[1].innerText.toLowerCase();
+                        break;
+                    case "tipo":
+                        texto = celdas[4].innerText.toLowerCase();
+                        break;
+                    default:
+                        texto = fila.innerText.toLowerCase();
+                }
+
+                fila.style.display = texto.includes(filtro) ? "" : "none";
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const inputFiltro = document.getElementById("inputFiltro");
+        const tipoFiltro = document.getElementById("tipoFiltro");
+        const filas = document.querySelectorAll("table tbody tr");
+
+        inputFiltro.addEventListener("input", function () {
+            const filtro = inputFiltro.value.toLowerCase();
+            const tipo = tipoFiltro.value;
+
+            filas.forEach(fila => {
+                const celdas = fila.querySelectorAll("td");
+                if (celdas.length === 0) return;
+
+                let texto = "";
+
+                switch (tipo) {
+                    case "subida_por":
+                        texto = celdas[2].innerText.toLowerCase();
+                        break;
+                    case "fecha":
+                        texto = celdas[1].innerText.toLowerCase();
+                        break;
+                    case "tipo":
+                        texto = celdas[4].innerText.toLowerCase();
+                        break;
+                    default:
+                        texto = fila.innerText.toLowerCase();
+                }
+
+                fila.style.display = texto.includes(filtro) ? "" : "none";
+            });
+        });
+    });
+</script>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'aplicacion/js/script_admin_evidencias.js' %}" defer></script>
+{% endblock %}
